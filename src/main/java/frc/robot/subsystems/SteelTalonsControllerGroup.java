@@ -1,3 +1,7 @@
+package frc.robot.subsystems;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+
 public class SteelTalonsControllerGroup extends SpeedControllerGroup {
 
    private double offset;
