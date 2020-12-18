@@ -15,10 +15,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.MoveIntake;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SteelTalonsControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -31,18 +35,18 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
   private SpeedController leftOne, leftTwo, rightOne, rightTwo;
-  
   private SpeedControllerGroup left, right;
-  
   private DifferentialDrive drive;
-
   private DriveTrain driveTrain;
-
+  
+  private SpeedController intakeLeft, intakeRight;
+  private Intake intake;
+  
   private Joystick joy;
+  private Button intakeIn, intakeOut;
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -63,6 +67,11 @@ public class RobotContainer {
 
     driveTrain.setDefaultCommand(new DriveWithJoystick());
 
+    intakeLeft = new SteelTalonsController(4, false, 1);
+    intakeRight = new SteelTalonsController(5, false, 1);
+
+    intake = new Intake(intakeLeft, intakeRight);
+
 
 
 
@@ -79,6 +88,11 @@ public class RobotContainer {
   
   
     joy = new Joystick(0);
+    intakeIn = new JoystickButton(joy, Constants.INTAKE_IN_BUTTTON);
+    intakeOut = new JoystickButton(joy, Constants.INTAKE_OUT_BUTTON);
+
+    intakeIn.whileHeld(new MoveIntake(Constants.INTAKE_IN_SPEED));
+    intakeOut.whileHeld(new MoveIntake(Constants.INTAKE_OUT_SPEED));
   }
 
 
@@ -92,6 +106,14 @@ public class RobotContainer {
     return m_autoCommand;
   }
 
+  
+  public Intake getIntake()
+  {
+    return Intake;
+  }
+  
+  
+  
   public DriveTrain getDriveTrain()
   {
     return driveTrain;
