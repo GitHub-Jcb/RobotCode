@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
@@ -23,6 +24,10 @@ import frc.robot.subsystems.SteelTalonsControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.Hatch;
+import frc.robot.commands.MoveHatch;
+import frc.robot.subsystems.Arm;
+import frc.robot.commands.MoveArm;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -46,6 +51,8 @@ public class RobotContainer {
   
   private Joystick joy;
   private Button intakeIn, intakeOut;
+  private Button hatchM;
+  private Button armM;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -57,6 +64,7 @@ public class RobotContainer {
     leftTwo = new SteelTalonsController(1, false, 1);
     rightOne = new SteelTalonsController(2, false, 1);
     rightTwo = new SteelTalonsController(3, false, 1);
+    SpeedController armSc = 0;
 
     left = new SpeedControllerGroup(leftOne, leftTwo);
     right = new SpeedControllerGroup(rightOne, rightTwo);
@@ -71,6 +79,14 @@ public class RobotContainer {
     intakeRight = new SteelTalonsController(5, false, 1);
 
     intake = new Intake(intakeLeft, intakeRight);
+
+    Solenoid solenoid = new Solenoid(0);
+    Hatch hatch = new Hatch(solenoid, true);
+    Arm arm = new Arm(armSc);
+
+
+
+   
 
 
 
@@ -90,9 +106,14 @@ public class RobotContainer {
     joy = new Joystick(0);
     intakeIn = new JoystickButton(joy, Constants.INTAKE_IN_BUTTTON);
     intakeOut = new JoystickButton(joy, Constants.INTAKE_OUT_BUTTON);
+    hatchM = new JoystickButton(joy, Constants.HATCH_MOVE_BUTTON);
+    armM = new JoystickButton(joy, Constants.ARM_MOVE_BUTTON);
 
     intakeIn.whileHeld(new MoveIntake(Constants.INTAKE_IN_SPEED));
     intakeOut.whileHeld(new MoveIntake(Constants.INTAKE_OUT_SPEED));
+    hatchM.whileHeld(new MoveHatch(hatch));
+    armM.whileHeld(new MoveArm(arm));
+
   }
 
 
@@ -109,7 +130,7 @@ public class RobotContainer {
   
   public Intake getIntake()
   {
-    return Intake;
+    return intake;
   }
   
   

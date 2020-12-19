@@ -17,14 +17,22 @@ package frc.robot;
  */
 public final class Constants
 {
-    public static final int INTAKE_IN_BUTTTON = 7;
+    public static final int INTAKE_IN_BUTTTON = 1;
 
-    public static final int INTAKE_OUT_BUTTON = 8;
+    public static final int INTAKE_OUT_BUTTON = 2;
+
+    public static final int HATCH_MOVE_BUTTON = 3;
+
+    public static final int ARM_MOVE_BUTTON = 4;
 
     public static final double INTAKE_IN_SPEED = 0.5;
 
     public static final double INTAKE_OUT_SPEED = -0.8;
 
+    public static final int HATCH_PCM = 0;
 
+    public static final double ARM_ANGLE = 90;
+
+    
 
 }
