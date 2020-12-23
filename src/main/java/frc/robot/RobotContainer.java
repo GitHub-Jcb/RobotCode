@@ -27,8 +27,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Hatch;
 import frc.robot.commands.MoveHatch;
 import frc.robot.subsystems.Arm;
-import frc.robot.commands.MoveArm;
-
+import frc.robot.commands.MoveArmUp;
+import frc.robot.commands.MoveArmDown;
+import frc.robot.subsystems.Wrist;
+import frc.robot.commands.MoveWristDown;
+import frc.robot.commands.MoveWristUp;
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -52,7 +55,11 @@ public class RobotContainer {
   private Joystick joy;
   private Button intakeIn, intakeOut;
   private Button hatchM;
-  private Button armM;
+  private Button armMU;
+  private Button armMD;
+  private Button wristMU;
+  private Button wristMD;
+
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -65,6 +72,7 @@ public class RobotContainer {
     rightOne = new SteelTalonsController(2, false, 1);
     rightTwo = new SteelTalonsController(3, false, 1);
     SpeedController armSc = 0;
+    SpeedController wristSc;
 
     left = new SpeedControllerGroup(leftOne, leftTwo);
     right = new SpeedControllerGroup(rightOne, rightTwo);
@@ -83,6 +91,7 @@ public class RobotContainer {
     Solenoid solenoid = new Solenoid(0);
     Hatch hatch = new Hatch(solenoid, true);
     Arm arm = new Arm(armSc);
+    Wrist wrist = new Wrist(wristSc, Constants.WRIST_ANGLE, Constants.WRIST_TOP_LIMIT, Constants.WRIST_BOTTOM_LIMIT, Constants.WRIST_HEIGHT);
 
 
 
@@ -107,12 +116,19 @@ public class RobotContainer {
     intakeIn = new JoystickButton(joy, Constants.INTAKE_IN_BUTTTON);
     intakeOut = new JoystickButton(joy, Constants.INTAKE_OUT_BUTTON);
     hatchM = new JoystickButton(joy, Constants.HATCH_MOVE_BUTTON);
-    armM = new JoystickButton(joy, Constants.ARM_MOVE_BUTTON);
+    armMU = new JoystickButton(joy, Constants.ARM_MOVE_UP_BUTTON);
+    armMD = new JoystickButton(joy, Constants.ARM_MOVE_DOWN_BUTTON);
+    wristMU = new JoystickButton(joy, Constants.WRIST_MOVE_UP_BUTTON);
+    wristMD = new JoystickButton(joy, Constants.WRIST_MOVE_DOWN_BUTTON);
 
     intakeIn.whileHeld(new MoveIntake(Constants.INTAKE_IN_SPEED));
     intakeOut.whileHeld(new MoveIntake(Constants.INTAKE_OUT_SPEED));
     hatchM.whileHeld(new MoveHatch(hatch));
-    armM.whileHeld(new MoveArm(arm));
+    armMU.whileHeld(new MoveArmUp(arm));
+    armMD.whileHeld(new MoveArmDown(arm));
+    wristMU.whileHeld(new MoveWristUp(wrist));
+    wristMD.whileHeld(new MoveWristDown(wrist));
+
 
   }
 

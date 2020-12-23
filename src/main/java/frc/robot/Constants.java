@@ -17,13 +17,22 @@ package frc.robot;
  */
 public final class Constants
 {
+    /** Button Id's */
     public static final int INTAKE_IN_BUTTTON = 1;
 
     public static final int INTAKE_OUT_BUTTON = 2;
 
     public static final int HATCH_MOVE_BUTTON = 3;
 
-    public static final int ARM_MOVE_BUTTON = 4;
+    public static final int ARM_MOVE_UP_BUTTON = 4;
+
+    public static final int ARM_MOVE_DOWN_BUTTON = 5;
+
+    public static final int WRIST_MOVE_UP_BUTTON = 6;
+
+    public static final int WRIST_MOVE_DOWN_BUTTON = 7;
+
+    /** Speeds or Other things */
 
     public static final double INTAKE_IN_SPEED = 0.5;
 
@@ -32,6 +41,16 @@ public final class Constants
     public static final int HATCH_PCM = 0;
 
     public static final double ARM_ANGLE = 90;
+
+    public static final double WRIST_ANGLE = 90;
+
+    public static final double WRIST_TOP_LIMIT = 10;
+
+    public static final double WRIST_BOTTOM_LIMIT = 0;
+
+    public static final double WRIST_HEIGHT = 5;
+
+
 
     
 
